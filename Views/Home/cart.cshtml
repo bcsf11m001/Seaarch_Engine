@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="center_content">
+    <div class="center_title_bar">Cart</div>
+    <!--div class="prod_box_big">
+    <div class="center_prod_box_big">
+        <div class="contact_form">
+        <div class="form_row">
+       
+            <label class="contact"><strong>Product Name</strong></label>
+            <label class="contact"><strong>Unit Price</strong></label>
+      
+        </div>
+        <div class="form_row"> <a href="#" class="prod_details">check out</a> </div>
+        </div>
+    </div-->
+    <table id="cart-table">
+        <tr>
+            <td>Product Name</td>
+            <td>Product Quantity</td>
+            <td>Product Value</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>item1</td>
+            <td>1</td>
+            <td>Rs. 321.0</td>
+            <td><img src="~/images/button-cross.png" height="20" width="20" alt="" border="0" /></td>
+        </tr>
+        <tr>
+            <td>item2</td>
+            <td>2</td>
+            <td>Rs. 324.0</td>
+            <td><img src="~/images/button-cross.png" height="20" width="20" alt="" border="0" /></td>
+        </tr>
+    </table>
+    <br />
+    <span style="margin-left:1rem; font-size:medium; font-weight:bold">Total:</span> Rs. 4,423<br />
+    <button id="checkout-btn">Checkout</button>
+    </div>

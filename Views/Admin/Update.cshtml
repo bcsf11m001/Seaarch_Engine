@@ -1,0 +1,154 @@
+﻿@model project.Models.Product
+<div class="center_content">
+    <div class="center_title_bar">Add Item</div>
+    <div class="prod_box_big">
+        @using (Html.BeginForm("UpdateConfirm/" + @Model.Id, "Admin", FormMethod.Post, null))
+        { 
+            
+            <div class="center_prod_box_big">
+                <div class="contact_form">
+                    <div class="form_row">
+                        @Html.Label("Title:", new { Class = "contact" })
+                        @Html.TextBoxFor(m => m.Name, new { Class = "contact_input", Value = @Model.Name })
+
+                    </div>
+                    <div class="form_row">
+                        @Html.Label("Old Price:", new { Class = "contact" })
+                        @Html.TextBoxFor(m => m.Old_price, new { Class = "contact_input", Value = @Model.Old_price })
+
+                    </div>
+                    <div class="form_row">
+                        @Html.Label("New Price:", new { Class = "contact" })
+                        @Html.TextBoxFor(m => m.New_price, new { Class = "contact_input", Value = @Model.New_price })
+
+                    </div>
+                    <div class="form_row">
+                        @Html.Label("Manufacturer:", new { Class = "contact" })
+                        @Html.TextBoxFor(m => m.Manufacturer, new { Class = "contact_input", Value = @Model.Manufacturer })
+
+                    </div>
+                    <div class="form_row">
+                        @Html.Label("Status:", new { Class = "contact" })
+                        @Html.TextBoxFor(m => m.Status, new { Class = "contact_input", Value = @Model.Status })
+
+                    </div>
+                    <div class="form_row">
+                        @Html.Label("Type:", new { Class = "contact" })
+                        @Html.TextBoxFor(m => m.Type, new { Class = "contact_input", Value = @Model.Type })
+
+                    </div>
+                    <div class="form_row">
+                        @Html.Label("Detail:", new { Class = "contact" })
+                        <textarea name="Detail" id="Detail" class="contact_textarea">@Model.Detail</textarea>
+                    </div>
+                    <!--<input type="submit" value="Update" />-->
+                    <div class="submit_button" id="update">
+                        <a href="#" class="submit_button2">Update</a>
+                    </div>
+                    <input type="submit" id="submit" value="Save" style="display:none" />
+                </div>
+            </div>
+        }
+        <div id="error"></div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#update").click(function () {
+            if($("#Name").val() != "")
+            {
+                var id = @Model.Id;
+                var name = $('#Name').val();
+                $.getJSON("/Admin/CheckUpdate?Name=" + name + "&Id=" + id, function (data) {
+                    //var z = JSON.parse(data);
+                    if (data) {
+                        //alert("here1");
+                        $("#error").text("Name already exist");
+                    }
+                    else {
+                        $("#submit").trigger("click");
+                    }
+                });
+            }
+            else
+            {
+                $("#submit").trigger("click");
+            }
+        });
+        $("form").validate({
+            rules: {
+                Name: "required",
+                Old_price: "required",
+                New_price: "required",
+                Manufacturer: "required",
+                Status: "required",
+                Type: "required",
+                Detail: "required"
+                /*email: {
+                    required: true,
+                    email: true
+                }*/
+            },
+            messages: {
+                Name: "Enter product name",
+                Old_price: "please mention old price",
+                New_price: "please mention new price",
+                Manufacturer: "please enter manufacturer company name",
+                Status: "status is required",
+                Type: "type is required",
+                Detail: "please enter some detail"
+            }
+        });
+    });
+</script>
+<script>
+/*    $(document).ready(function () {
+        $('#update').on("click", function () {
+            if ($('#Name').val() == "") {
+                //return false;
+            }
+
+            else if ($('#Old_price').val() == "") {
+                //return false;
+            }
+            else if ($('#New_price').val() == "") {
+                //return false;
+            }
+            else if ($('#Manufacturer').val() == "") {
+                //return false;
+            }
+            else if ($('#Status').val() == "") {
+                //return false;
+            }
+            else if ($('#Type').val() == "") {
+                //return false;
+            }
+            else if ($('#Detail').val() == "") {
+                //return false;
+            }
+            else {
+                //alert("here");
+                var form = $('form');
+                var id = Model.Id;
+         /*       var name = $('#Name').val();
+                $.getJSON("/Admin/CheckUpdate?Name=" + name + "&Id=" + id, function (data) {
+                    //var z = JSON.parse(data);
+                    if (data) {
+                        //alert("here1");
+                        $("#error").text("Name already exist");
+                    }
+                    else {
+                        $.ajax( {
+                            type: "POST",
+                            url: form.attr( 'action' ),
+                            data: form.serialize(),
+                            success: function( response ) {
+                                window.location.href = "/Admin/Index";
+                            }
+                        } );
+                    }
+                });
+            }
+        });
+    });*/
+</script>

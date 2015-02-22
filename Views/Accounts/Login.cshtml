@@ -1,0 +1,66 @@
+﻿<div class="center_content">
+    <div class="center_title_bar">Login</div>
+    <div class="prod_box_big">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, null))
+        {
+            <div class="center_prod_box_big">
+                <div class="contact_form">
+                    <div class="form_row">
+                        <label class="contact">Email:</label>
+                        <input class="contact_input" name="Email" id="Email" type="text" placeholder=" Enter you email address">
+                    </div>
+                    <div class="form_row">
+                        <label class="contact">Password:</label>
+                        <input class="contact_input" name="Password" id="Password" type="password" placeholder=" Enter your password">
+                    </div>
+                    <div class="submit_button" id="login">
+                        <a href="#" class="submit_button2">Log In</a>
+                    </div>
+                    <input type="submit" id="submit" value="Save" style="display:none" />
+                </div>
+            </div>
+        }
+        <div id="error"></div>
+        <!--<form action="/Admin/AddItem" method="post">-->
+        <!--</form>-->
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#login").click(function () {
+            if ($("#Email").val() != "" && $("#Password").val() != "") {
+                var email = $('#Email').val();
+                var password = $('#Password').val();
+                $.getJSON("/Accounts/CheckAccount?Email=" + email + "&Password=" + password, function (data) {
+                    //var z = JSON.parse(data);
+                    if (data) {
+                        //alert("here1");
+                        $("#error").text("Email or Password is Incorrect");
+                    }
+                    else {
+                        $("#submit").trigger("click");
+                    }
+                });
+            }
+            else {
+                $("#submit").trigger("click");
+            }
+        });
+        $("form").validate({
+            rules: {
+                Password: "required",
+                Email: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                Password: "Please enter password",
+                Email: {
+                    required: "Email is required",
+                    email: "please use someone@domain.com format"
+                }
+            }
+        });
+    });
+</script>

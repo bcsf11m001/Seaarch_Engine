@@ -1,0 +1,38 @@
+﻿@model List<project.Models.Product>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="center_content">
+    <div class="center_title_bar">All Items</div>
+    <div class="prod_box_big">
+        <table border="1">
+            <tr class="top-row">
+                <td>Name</td>
+                <td>Old Price</td>
+                <td>New Price</td>
+                <td width="100px">Details</td>
+                <td>Manufacturer</td>
+                <td>Status</td>
+                <td>Type</td>
+                <td>Image</td>
+            </tr>
+            @foreach(var x in Model)
+            {
+                <tr>
+                    <td>@x.Name</td>
+                    <td>@x.Old_price$</td>
+                    <td>@x.New_price$</td>
+                    <td>@x.Detail</td>
+                    <td>@x.Manufacturer</td>
+                    <td>@x.Status</td>
+                    <td>@x.Type</td>
+                    <td><a href="/Admin/Details/@x.Id"><img src="~/images/@x.Img_Name" height="50" /></a></td>
+                </tr>
+            }
+        </table>
+        <<!--button style="margin-top:20px; color:#ff6a00;"><a href="/Admin/Add">Add New Item</a></!--button>-->
+        <div class="prod_details_tab">
+            <a href="/Admin/Add" class="prod_buy">Add New Item</a>
+        </div>
+</div>

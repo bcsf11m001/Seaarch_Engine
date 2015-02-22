@@ -1,0 +1,56 @@
+﻿@model project.Models.Product
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="center_content">
+    <div class="center_title_bar">Makita 156 MX-VL</div>
+    <div class="prod_box_big">
+        <div class="center_prod_box_big">
+            <div class="product_img_big">
+                <a href="javascript:popImage('images/big_pic.jpg','Some Title')" title="header=[Zoom] body=[&nbsp;] fade=[on]"><img src="~/Images/@Model.Img_Name" height="80" border="0" /></a>
+            </div>
+            <div class="details_big_box">
+                <div class="product_title_big">@Model.Name</div>
+                <div class="specifications">
+                    <div class="form_row">
+                        <input class="contact_input" name="total" id="total" type="text" placeholder=" Enter the quantity">
+                    </div>
+                </div>
+                <div class="submit_button" id="quantity">
+                    <a href="#" class="submit_quantity">Add</a>
+                </div>
+                <br />
+                <div id="error"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#quantity').on("click", function () {
+            if ($('#total').val() == "") {
+                $("#error").text("Please enter quantity");
+            }
+
+            else if ((parseInt( $('#total').val())) <= 0) {
+                $("#error").text("Quantity should be positive number");
+            }
+            else {
+                var form = $('form');
+                var quantity = $('#total').val();
+                var id = @Model.Id;
+                $.getJSON("/Home/GetQuantity?quantity=" + quantity + "&id=" + id, function (data) {
+                    //alert(data);
+                    if(data)
+                    {
+                        window.location.href = "/Home/Cart";
+                    }
+                    else
+                    {
+                        window.location.href = "/Home/Cart";
+                    }
+                });
+            }
+        });
+    });
+</script>

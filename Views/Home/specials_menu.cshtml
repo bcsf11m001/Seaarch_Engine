@@ -1,0 +1,19 @@
+﻿@model List<project.Models.Product>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="center_content">
+    <div class="center_title_bar">Latest Products</div>
+    @foreach (var x in Model)
+    {
+        <div class="prod_box">
+            <div class="center_prod_box">
+                <div class="product_title">@x.Name</div>
+                <div class="product_img"><img src="~/images/@x.Img_Name" alt="" border="0" /></div>
+                <div class="prod_price"><span class="reduce">@x.Old_price$</span> <span class="price">@x.New_price$</span></div>
+            </div>
+            <div class="prod_details_tab"> <a href="/Home/Cart/@x.Id" class="prod_buy">Add to Cart</a> <a href="/Home/Details/@x.Id" class="prod_details">Details</a> </div>
+        </div>
+    }
+</div>
+<!-- end of center content -->

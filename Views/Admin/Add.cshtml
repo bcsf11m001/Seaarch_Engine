@@ -1,0 +1,109 @@
+﻿@model project.Models.Product
+<div class="center_content">
+    <div class="center_title_bar">Add Item</div>
+    <div class="prod_box_big">
+    @using (Html.BeginForm("AddItem", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <div class="center_prod_box_big">
+            <div class="contact_form">
+                <div class="form_row">
+                    @Html.Label("Title:", new { Class = "contact" })
+                    @Html.TextBoxFor(m => m.Name, new { Class = "contact_input" })
+                </div>
+                <div class="form_row">
+                    @Html.Label("Old Price:", new { Class = "contact" })
+                    @Html.TextBoxFor(m => m.Old_price, new { Class = "contact_input" })
+                </div>
+                <div class="form_row">
+                    @Html.Label("New Price:", new { Class = "contact" })
+                    @Html.TextBoxFor(m => m.New_price, new { Class = "contact_input" })
+                </div>
+                <div class="form_row">
+                    @Html.Label("Manufacturer:", new { Class = "contact" })
+                    @Html.TextBoxFor(m => m.Manufacturer, new { Class = "contact_input" })
+                </div>
+                <div class="form_row">
+                    @Html.Label("Status:", new { Class = "contact" })
+                    @Html.TextBoxFor(m => m.Status, new { Class = "contact_input" })
+                    @Html.ValidationMessageFor(model => model.Status)
+                </div>
+                <div class="form_row">
+                    @Html.Label("Type:", new { Class = "contact" })
+                    @Html.TextBoxFor(m => m.Type, new { Class = "contact_input" })
+                    @Html.ValidationMessageFor(model => model.Type)
+                </div>
+                <div class="form_row">
+                    @Html.Label("Detail:", new { Class = "contact" })
+                    <textarea name="Detail" id="Detail" class="contact_textarea"></textarea>
+                </div>
+                <div class="form_row">
+                    @Html.Label("File:", new { Class = "contact" })
+                    <input type="file" name="image" id="image" accept="image/*" />
+                </div>
+                <!--<div class="submit_button" id="save"> <a href="#" class="submit_button2">Save</a>
+                </div>-->
+                <div class="submit_button" id="add">
+                    <a href="#" class="submit_button2">Add</a>
+                </div>
+                <input type="submit" id="submit" value="Save" style="display:none"/>    
+            </div>
+        </div>
+    }
+        <div id="error"></div>
+        <!--<form action="/Admin/AddItem" method="post">-->
+            
+            <!--</form>-->
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#add").click(function () {
+            if($("#Name").val() != "")
+            {
+                var Name = $("#Name").val();
+                $.getJSON("/Admin/CheckItem?Name=" + Name, function (data) {
+                    //var z = JSON.parse(data);
+                    if (data) {
+                        //alert("here1");
+                        $("#error").text("Name already exist");
+                    }
+                    else {
+                        $("#submit").trigger("click");
+                    }
+                });
+            }
+            else
+            {
+                $("#submit").trigger("click");
+            }
+        });
+        $("form").validate({
+            rules: {
+                Name: "required",
+                Old_price: "required",
+                New_price: "required",
+                Manufacturer: "required",
+                Status: "required",
+                Type: "required",
+                Detail: "required",
+                image: "required"
+                /*email: {
+                    required: true,
+                    email: true
+                }*/
+            },
+            messages: {
+                Name: "Enter product name",
+                Old_price: "please mention old price",
+                New_price: "please mention new price",
+                Manufacturer: "please enter manufacturer company name",
+                Status: "status is required",
+                Type: "type is required",
+                Detail: "please enter some detail",
+                image: "please upload image"
+            }
+        });
+    });
+</script>

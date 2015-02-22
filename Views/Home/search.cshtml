@@ -1,0 +1,70 @@
+﻿@model List<project.Models.Product>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="center_content">
+    <div class="prod_box_big">
+        @using (Html.BeginForm("", "", FormMethod.Post, null))
+        {
+            <div class="center_prod_box_big">
+                <div class="contact_form">
+                    <div class="form_row">
+                        <label class="contact">Search:</label>
+                        <input class="contact_input" name="searchText" id="searchText" type="text" placeholder=" Enter text to search">
+                    </div>
+                    <div class="submit_button" id="search">
+                        <a href="#" class="submit_button2">Search</a>
+                    </div>
+                </div>
+            </div>
+        }
+        <!--<form action="/Admin/AddItem" method="post">-->
+        <!--</form>-->
+    </div>
+    <div class="center_title_bar">Search</div>
+    <!--now loop body start-->
+    <!--<div class="prod_box">
+        <div class="center_prod_box">
+            <div class="product_title">Keyboard</div>
+            <div class="product_img"><img src='~/images/d630-original-keyboard.jpg' alt="" border="0" /></div>
+            <div class="prod_price"><span class="reduce">24.99$</span> <span class="price">22.99$</span></div>
+        </div>
+        <div class="prod_details_tab"> <a href="/Home/Cart/12" class="prod_buy">Add to Cart</a> <a href="/Home/Details/12" class="prod_details">Details</a> </div>
+    </div>-->
+</div>
+<!-- end of center content -->
+<script>
+    $(document).ready(function () {
+        $('#search').on("click", function () {
+            if ($('#searchText').val() == "") {
+                //return false;
+            }
+            else {
+                //alert("here");
+                var form = $('form');
+                $('.prod_box').remove();//remove last child
+                var searchText = $('#searchText').val();
+                $.getJSON("/Home/CheckSearch?searchText=" + searchText, function (d) {
+                    if (d) {
+                        //alert("alert here");
+                        $.getJSON("/Home/CheckSearchCount?searchText=" + searchText, function (count) {
+                            var i;
+                            //alert(count);
+                            for (i = 0; i < count; i++) {
+                                console.log(d[i]);
+                                var y = "<div class='prod_box'><div class='center_prod_box'><div class='product_title'>" + d[i].Name + "</div><div class='product_img'><img src='/images/" + d[i].Img_Name + "' alt='' border='0' /></div><div class='prod_price'><span class='reduce'>" + d[i].Old_price + "$</span> <span class='price'>" + d[i].New_price + "$</span></div></div><div class='prod_details_tab'> <a href='/Home/Quantity/" + d[i].Id + "' class='prod_buy'>Add to Cart</a> <a href='/Home/Details/" + d[i].Id + "' class='prod_details'>Details</a> </div></div>";
+                                $('.center_content').append(y);
+                            }
+                        });
+                        //here data would be
+                    }
+                    else {
+                        //print error here
+                        var y = "<div class='prod_box'>No Data found</div>";
+                        $('.center_content').append(y);
+                    }
+                });
+            }
+        });
+    });
+</script>

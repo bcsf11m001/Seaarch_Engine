@@ -1,0 +1,25 @@
+@model project.Models.Product
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="center_content">
+      <div class="center_title_bar">Makita 156 MX-VL</div>
+      <div class="prod_box_big">
+        <div class="center_prod_box_big">
+          <div class="product_img_big"> <a href="javascript:popImage('images/big_pic.jpg','Some Title')" title="header=[Zoom] body=[&nbsp;] fade=[on]"><img src="~/Images/@Model.Img_Name" height="80" border="0" /></a>
+          </div>
+          <div class="details_big_box">
+            <div class="product_title_big">@Model.Name</div>
+            <div class="specifications"> Available: <span class="blue">In stock</span><br />
+              Manufacturer: <span class="blue">@Model.Manufacturer</span><br />
+              Transport: <span class="blue"> delivery services company</span><br />
+              Include :<span class="blue"> TVA</span><br />
+              Description :<span class="blue">@Model.Detail</span><br />
+            </div>
+            <div class="prod_price_big"><span class="reduce">@Model.Old_price$</span> <span class="price">@Model.New_price$</span></div>
+            <a href="/Home/Cart/@Model.Id" class="prod_buy">add to cart</a> 
+
+          </div>
+        </div>
+      </div>
+    </div>
